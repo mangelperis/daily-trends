@@ -14,6 +14,30 @@ services:
     networks:
       - default
       - local
+  mariadb:
+    image: mariadb:10.4.13
+    volumes:
+      - ./mariadb:/var/lib/mysql
+      - ./docker/mariadb.cnf:/etc/mysql/my.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: dm2S64mVjZV82Fwh2tYHcPpD2FGss3
+    ports:
+      - 33064:3306
+    networks:
+      - local
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    volumes:
+      - ./docker/phpmyadmin.config.php:/etc/phpmyadmin/config.user.inc.php
+    links:
+      - mariadb
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+    networks:
+      - local
 networks:
   local:
     external:
