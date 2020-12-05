@@ -1,0 +1,20 @@
+version: "3"
+services:
+  app:
+    build: .
+    ports:
+      - 8001:8080
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+    networks:
+      - default
+      - local
+networks:
+  local:
+    external:
+      name: local
