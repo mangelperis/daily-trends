@@ -5,7 +5,8 @@ services:
     ports:
       - 8001:8080
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www/html:delegated
+      - ./docker/create_database_daily_trends.sql:/docker-entrypoint-initdb.d/create_database_daily_trends.sql
     environment:
       - APP_ENV=local
       - APP_DEBUG=true

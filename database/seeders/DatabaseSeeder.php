@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Feed;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,5 +15,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+
+        $label = 'fake-feed';
+        $limit = 5;
+
+        for ($i = 1; $i <= $limit; $i++) {
+            Feed::create(['title' => sprintf('%s nº %d', $label,$i),
+                'body' => 'This is a sample text.',
+                'image' => null,
+                'source' => 'fake-source',
+                'publisher' => 'fake-publisher']);
+        }
     }
 }
