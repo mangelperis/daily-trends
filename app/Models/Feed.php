@@ -22,6 +22,7 @@ class Feed extends Model
         'image',
         'source',
         'publisher',
+        'article_id',
         'created_at',
         'updated_at'
     ];
