@@ -18,7 +18,7 @@ Daily Trends is a website platform to create and retrieve your own news feeds. A
 ## Installation
 Extract the zip files or clone the repository in your desired folder and then open a console window there.
 First you need to grab permission to the system to write in logs & cache folders.
-> sudo chmod 755 -R `folder`
+> sudo chmod 775 -R `folder`
 
 > bootstrap/cache |
 > storage |
