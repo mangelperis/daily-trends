@@ -75,17 +75,48 @@ class FeedController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function edit($id){
         $feed = Feed::findOrFail($id);
 
-        return view('feeds.edit', $feed);
+        return view('feeds.edit', ['feed' => $feed]);
     }
 
 
-    public function update($device, Request $request){
+    /**
+     * @param $id
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update($id, Request $request){
+        $feed = Feed::findOrFail($id);
 
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+            'source' => 'required',
+            'publisher' => 'required'
+        ]);
+
+        $input = $request->all();
+
+        $input['article_id'] = sprintf('%s-%s', str_replace(' ', '-', $input['title']), uniqid());
+
+        $feed->fill($input)->save();
+
+        Session::flash('flash_message', 'Feed successfully updated!');
+
+        return redirect()->back();
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id){
         $feed = Feed::findOrFail($id);
 

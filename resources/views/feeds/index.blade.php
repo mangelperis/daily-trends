@@ -31,7 +31,12 @@
                     <td>{{$feed->updated_at}}</td>
                     <td>
                         <a class="btn btn-info"  href="{{route('feeds.edit', $feed->id)}}" role="button">Edit</a>
-                        <a class="btn btn-danger" href="{{route('feeds.destroy', $feed->id)}}" role="button">Delete</a>
+                        {!! Form::open([
+                            'method' => 'DELETE',
+                            'route' => ['feeds.destroy', $feed->id]
+                        ]) !!}
+                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                        {!! Form::close() !!}
                     </td>
                 </tr>
             @endforeach

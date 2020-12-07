@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h1>Edit Feed</h1>
+    <h1>Edditing -"{{ $feed->title }}"-</h1>
     <p class="lead">Edit this feed below.
         <a class="btn btn-info"  href="{{route('feeds.index')}}" role="button">Go back</a>
     </p>
@@ -18,8 +18,9 @@
         </div>
     @endif
 
-    {!! Form::open([
-        'route' => 'feeds.store'
+    {!! Form::model($feed, [
+        'method' => 'PATCH',
+        'route' => ['feeds.update', $feed->id]
     ]) !!}
 
     <div class="form-group">
@@ -48,7 +49,7 @@
         {!! Form::text('publisher', null, ['class' => 'form-control']) !!}
     </div>
 
-    {!! Form::submit('Create New Feed', ['class' => 'btn btn-primary']) !!}
+    {!! Form::submit('Update Feed', ['class' => 'btn btn-primary']) !!}
 
     {!! Form::close() !!}
 
