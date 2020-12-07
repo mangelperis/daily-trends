@@ -20,3 +20,5 @@ Route::get('/', function () {
 
 
 Route::resource('feeds', FeedController::class)->except(['show']);
+
+Route::get('feeds/reload', [FeedController::class, 'reloadFeeds'])->name('feeds.reload');

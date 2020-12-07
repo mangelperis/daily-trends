@@ -27,15 +27,22 @@ class FeedController extends Controller
         $this->scrapper = $scrapper;
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function reloadFeeds(){
+        $this->scrapper->getElMundoFeeds();
+        $this->scrapper->getElPaisFeeds();
+
+        return redirect()->back();
+    }
+
 
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        $this->scrapper->getElMundoFeeds();
-        $this->scrapper->getElPaisFeeds();
-
         $feeds = Feed::all()->sortByDesc('id')->take(self::LIMIT_FEEDS);
 
         return view('feeds.index', ['items' => $feeds]);

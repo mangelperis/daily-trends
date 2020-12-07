@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h1>Edditing -"{{ $feed->title }}"-</h1>
+    <h1>Edditing -"{!! $feed->title !!}"-</h1>
     <p class="lead">Edit this feed below.
         <a class="btn btn-info"  href="{{route('feeds.index')}}" role="button">Go back</a>
     </p>
