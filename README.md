@@ -8,6 +8,8 @@ Daily Trends is a website platform to create and retrieve your own news feeds. A
 * Docker
 * PHP 7
 
+![diagram](./diagram.png)
+
 ## Third party libraries
 * **laravelcollective/html**: HTML and Form builder
 * **fabpot/goutte**: Web screen scraping and web crawling library for PHP
@@ -24,9 +26,17 @@ First you need to grab permission to the system to write in logs & cache folders
 Build & init docker container
 
 > docker-compose build
+>
+> docker network create local
+> 
 > docker-compose up -d
 
-Connect to the container
+Composer Install required as root
+> docker exec -ti --user root dailytrend_app_1 bash
+> 
+> composer install
+
+Connect to the container (non root user)
 > docker-compose run app bash 
 
 Create the tables in database and optionally feed them with the provided seeder
