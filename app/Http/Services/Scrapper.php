@@ -5,7 +5,6 @@ namespace App\Http\Services;
 
 use App\Models\Feed;
 use Goutte\Client;
-use function PHPUnit\Framework\isEmpty;
 
 class Scrapper
 {
@@ -69,7 +68,11 @@ class Scrapper
                 return false;
             }
 
-            $articleID = $node->attr('ue-article-id');
+            //This site got all the content in a <script> tag inside the article
+            $content = collect(\json_decode($node->filter('script')->first()->text(), true));
+
+            $articleUrl = explode('/', $content->get('url'));
+            $articleID = str_replace('.html', '', array_pop($articleUrl));
 
             $feed = Feed::where('article_id', '=', $articleID)->first();
 
@@ -78,19 +81,18 @@ class Scrapper
                 $feed->article_id = $articleID;
             }
 
-            $feed->title = $node->filter('h2')->text();
-            $feed->body = $node->filter('.ue-c-cover-content__standfirst')->text('');
-            $publishers = $node->filter('.ue-c-cover-content__byline-name')->each(function ($publisher) {
-                $text = $publisher->text('');
-                $text = str_replace('Redacción:', '', $text);
-                $text = str_replace('|', ',', $text);
-
-                return $text;
-            });
+            $feed->title = $content->get('headline');
+            $feed->body = $content->get('description');
+            $authors = $content->get('author');
+            $publishers = [];
+            foreach ($authors as $publisher) {
+                $publishers[] = $publisher['name'];
+            };
             $feed->publisher = trim(implode(',', $publishers));
-            $imageNode = $node->filter('.ue-c-cover-content__image');
-            $feed->image = null !== $imageNode->getNode(0) ? $imageNode->attr('src') : null;
-            $feed->source = self::SOURCES['mundo'];
+
+            $image = $content->get('image');
+            $feed->image = null !== $image ? $image[0]['url'] : null;
+            $feed->source = self::SOURCES['pais'];
 
             $feed->save();
         });

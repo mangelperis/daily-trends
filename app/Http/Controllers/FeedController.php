@@ -31,10 +31,10 @@ class FeedController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index(){
-
+    public function index()
+    {
         $this->scrapper->getElMundoFeeds();
-       // $this->scrapper->getElPaisFeeds();
+        $this->scrapper->getElPaisFeeds();
 
         $feeds = Feed::all()->sortByDesc('id')->take(self::LIMIT_FEEDS);
 
@@ -55,7 +55,8 @@ class FeedController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         $this->validate($request, [
             'title' => 'required',
@@ -67,9 +68,9 @@ class FeedController extends Controller
 
         $input['article_id'] = sprintf('%s-%s', str_replace(' ', '-', $input['title']), uniqid());
 
-        if(Feed::create($input)){
+        if (Feed::create($input)) {
             Session::flash('flash_message_succeed', 'Feed successfully added!');
-        }else{
+        } else {
             Session::flash('flash_message_error', 'Feed create error!');
         }
 
@@ -81,7 +82,8 @@ class FeedController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit($id){
+    public function edit($id)
+    {
         $feed = Feed::findOrFail($id);
 
         return view('feeds.edit', ['feed' => $feed]);
@@ -94,7 +96,8 @@ class FeedController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update($id, Request $request){
+    public function update($id, Request $request)
+    {
         $feed = Feed::findOrFail($id);
 
         $this->validate($request, [
@@ -108,9 +111,9 @@ class FeedController extends Controller
         $input['article_id'] = sprintf('%s-%s', str_replace(' ', '-', $input['title']), uniqid());
 
 
-        if($feed->fill($input)->save()){
+        if ($feed->fill($input)->save()) {
             Session::flash('flash_message_succeed', 'Feed successfully updated!');
-        }else{
+        } else {
             Session::flash('flash_message_error', 'Feed update error!');
         }
 
@@ -121,7 +124,8 @@ class FeedController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id){
+    public function destroy($id)
+    {
         $feed = Feed::findOrFail($id);
 
         $feed->delete();
