@@ -15,7 +15,7 @@ class CreateFeedsTable extends Migration
         Schema::create('feed', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title', 255);
-            $table->text('body');
+            $table->text('body')->default('');
             $table->string('image', 255)->nullable();
             $table->string('source', 255);
             $table->string('publisher', 255);

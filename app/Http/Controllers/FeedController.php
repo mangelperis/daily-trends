@@ -59,7 +59,6 @@ class FeedController extends Controller
 
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required',
             'source' => 'required',
             'publisher' => 'required'
         ]);
@@ -100,7 +99,6 @@ class FeedController extends Controller
 
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required',
             'source' => 'required',
             'publisher' => 'required'
         ]);
