@@ -5,6 +5,11 @@
 @section('content')
     <a class="btn btn-info"  href="{{route('feeds.create')}}" role="button">Create new</a>
 
+    @if(Session::has('flash_message_succeed'))
+        @include('layouts.alerts.flash_succeed')
+    @elseif(Session::has('flash_message_error'))
+        @include('layouts.alerts.flash_error')
+    @endif
 
         <table class="table table-striped">
             <thead>

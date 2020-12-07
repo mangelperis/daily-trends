@@ -16,7 +16,7 @@ class FeedController extends Controller
      */
     private $scrapper;
 
-    const LIMIT_FEEDS = 5;
+    const LIMIT_FEEDS = 10;
 
     /**
      * FeedController constructor.
@@ -34,6 +34,7 @@ class FeedController extends Controller
     public function index(){
 
         $this->scrapper->getElMundoFeeds();
+       // $this->scrapper->getElPaisFeeds();
 
         $feeds = Feed::all()->sortByDesc('id')->take(self::LIMIT_FEEDS);
 
@@ -67,9 +68,11 @@ class FeedController extends Controller
 
         $input['article_id'] = sprintf('%s-%s', str_replace(' ', '-', $input['title']), uniqid());
 
-        Feed::create($input);
-
-        Session::flash('flash_message', 'Feed successfully added!');
+        if(Feed::create($input)){
+            Session::flash('flash_message_succeed', 'Feed successfully added!');
+        }else{
+            Session::flash('flash_message_error', 'Feed create error!');
+        }
 
         return redirect()->back();
     }
@@ -106,9 +109,12 @@ class FeedController extends Controller
 
         $input['article_id'] = sprintf('%s-%s', str_replace(' ', '-', $input['title']), uniqid());
 
-        $feed->fill($input)->save();
 
-        Session::flash('flash_message', 'Feed successfully updated!');
+        if($feed->fill($input)->save()){
+            Session::flash('flash_message_succeed', 'Feed successfully updated!');
+        }else{
+            Session::flash('flash_message_error', 'Feed update error!');
+        }
 
         return redirect()->back();
     }
@@ -122,7 +128,7 @@ class FeedController extends Controller
 
         $feed->delete();
 
-        Session::flash('flash_message', 'Feed successfully deleted!');
+        Session::flash('flash_message_error', 'Feed successfully deleted!');
 
         return redirect()->route('feeds.index');
     }

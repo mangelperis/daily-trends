@@ -12,10 +12,10 @@
     <hr>
     @include('layouts.alerts.errors')
 
-    @if(Session::has('flash_message'))
-        <div class="alert alert-success">
-            {{ Session::get('flash_message') }}
-        </div>
+    @if(Session::has('flash_message_succeed'))
+        @include('layouts.alerts.flash_succeed')
+    @elseif(Session::has('flash_message_error'))
+        @include('layouts.alerts.flash_error')
     @endif
 
     {!! Form::open([
