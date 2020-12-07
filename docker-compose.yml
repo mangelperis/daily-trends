@@ -6,7 +6,6 @@ services:
       - 8001:8080
     volumes:
       - ./:/var/www/html:delegated
-      - ./docker/create_database_daily_trends.sql:/docker-entrypoint-initdb.d/create_database_daily_trends.sql
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
@@ -20,6 +19,7 @@ services:
     volumes:
       - ./mariadb:/var/lib/mysql
       - ./docker/mariadb.cnf:/etc/mysql/my.cnf
+      - ./docker/create_database_daily_trends.sql:/docker-entrypoint-initdb.d/create_database_daily_trends.sql
     environment:
       MYSQL_ROOT_PASSWORD: dm2S64mVjZV82Fwh2tYHcPpD2FGss3
     ports:
