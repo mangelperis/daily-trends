@@ -39,7 +39,7 @@
             <tbody>
             @foreach($items as $feed)
                 <tr>
-                    <td><img style="height: 50px; width: 50px;" src="{{$feed->image}}" alt=""></td>
+                    <td><img class="img-fluid" src="{{$feed->image}}" alt="no-image"></td>
                     <th scope="row">{!! $feed->title !!}</th>
                     <td>{!! $feed->body !!}</td>
                     <td>{{$feed->source}}</td>
