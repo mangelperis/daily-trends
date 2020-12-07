@@ -22,10 +22,10 @@ class DatabaseSeeder extends Seeder
         for ($i = 1; $i <= $limit; $i++) {
             Feed::create(['title' => sprintf('%s nº %d', $label,$i),
                 'body' => 'This is a sample text.',
-                'article' => sprintf('%s-%d', $label,$i),
                 'image' => null,
                 'source' => 'fake-source',
-                'publisher' => 'fake-publisher']);
+                'publisher' => 'fake-publisher',
+                'article_id' => sprintf('%s-%d', $label,$i),]);
         }
     }
 }
