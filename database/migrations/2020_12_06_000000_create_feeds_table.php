@@ -19,6 +19,7 @@ class CreateFeedsTable extends Migration
             $table->string('image', 255)->nullable();
             $table->string('source', 255);
             $table->string('publisher', 255);
+            $table->string('article_id', 255)->unique();
             $table->datetime('created_at')->nullable();
             $table->datetime('updated_at')->nullable();
         });
