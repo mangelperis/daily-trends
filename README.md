@@ -17,8 +17,8 @@ Extract the zip files or clone the repository in your desired folder and then op
 First you need to grab permission to the system to write in logs & cache folders.
 > sudo chmod 755 -R `folder`
 
-> bootstrap/cache
-> storage
+> bootstrap/cache |
+> storage |
 > vendor/composer
 
 Build & init docker container
